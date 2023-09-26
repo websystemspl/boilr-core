@@ -98,7 +98,13 @@ class Bootstrap
     private function loadAssets()
     {
         $finder = new Finder();
-        $finder->files()->name('entrypoints.json')->in($this->containerBuilder->getParameter('app_path') . '/dist');
+
+        try {
+            
+            $finder->files()->name('entrypoints.json')->in($this->containerBuilder->getParameter('app_path') . '/dist');
+        } catch (\Throwable $th) {
+
+        }
 
         foreach($finder as $file) {
             $fileData = json_decode($file->getContents(), true);
