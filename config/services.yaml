@@ -8,14 +8,14 @@ services:
 
   # Load App Files
   Boilr\App\:
-    resource: '../../src/'
+    resource: '%app_path%/src/'
     exclude:
-        - 'src/Controller/'
+        - '%app_path%/src/Controller/'
     public: true
 
   # Load Core services
   Websystems\BoilrCore\Service\:
-    resource: '../src/Service'
+    resource: '%app_path%/src/Service'
     public: true
 
   # Load Core Controller
@@ -26,13 +26,13 @@ services:
 
   # Load App Controllers
   Boilr\App\Controller\:
-    resource: '../../src/Controller'
+    resource: '%app_path%/src/Controller'
     parent: Websystems\BoilrCore\Controller
     public: true
 
   # Load App Event Subscribers
   Boilr\App\EventSubscriber\:
-    resource: '../../src/EventSubscriber'
+    resource: '%app_path%/src/EventSubscriber'
     public: true
 
   Websystems\BoilrCore\Interface\TemplateInterface:
