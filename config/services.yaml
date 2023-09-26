@@ -35,7 +35,7 @@ services:
     resource: '%app_path%/src/EventSubscriber'
     public: true
 
-  Websystems\BoilrCore\Interface\TemplateInterface:
+  Websystems\BoilrCore\Interfaces\TemplateInterface:
     public: true
     class: '%template.system%'
 

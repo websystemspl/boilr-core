@@ -1,6 +1,6 @@
 <?php
 
-namespace Websystems\BoilrCore\Interface;
+namespace Websystems\BoilrCore\Interfaces;
 
 interface TemplateInterface
 {

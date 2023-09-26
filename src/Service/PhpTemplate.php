@@ -2,7 +2,7 @@
 
 namespace Websystems\BoilrCore\Service;
 
-use Websystems\BoilrCore\Interface\TemplateInterface;
+use Websystems\BoilrCore\Interfaces\TemplateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class PhpTemplate implements TemplateInterface
