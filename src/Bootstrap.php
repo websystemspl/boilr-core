@@ -102,35 +102,35 @@ class Bootstrap
         try {
             
             $finder->files()->name('entrypoints.json')->in($this->containerBuilder->getParameter('app_path') . '/dist');
+
+            foreach($finder as $file) {
+                $fileData = json_decode($file->getContents(), true);
+                foreach($fileData['entrypoints'] as $type => $entrypoint) {
+                    if($type === 'admin') {
+                        add_action('admin_enqueue_scripts', function() use ($entrypoint) {
+                            foreach($entrypoint['js'] as $jsScript) {
+                                wp_enqueue_script($jsScript, $jsScript);
+                            }
+                            foreach($entrypoint['css'] as $cssScript) {
+                                wp_enqueue_style($cssScript, $cssScript);
+                            }
+                        }, 99);
+                    }
+    
+                    if($type === 'front') {
+                        add_action('wp_enqueue_scripts', function() use ($entrypoint) {
+                            foreach($entrypoint['js'] as $jsScript) {
+                                wp_enqueue_script($jsScript, $jsScript);
+                            }
+                            foreach($entrypoint['css'] as $cssScript) {
+                                wp_enqueue_style($cssScript, $cssScript);
+                            }
+                        }, 99);
+                    }
+                }
+            }            
         } catch (\Throwable $th) {
 
-        }
-
-        foreach($finder as $file) {
-            $fileData = json_decode($file->getContents(), true);
-            foreach($fileData['entrypoints'] as $type => $entrypoint) {
-                if($type === 'admin') {
-                    add_action('admin_enqueue_scripts', function() use ($entrypoint) {
-                        foreach($entrypoint['js'] as $jsScript) {
-                            wp_enqueue_script($jsScript, $jsScript);
-                        }
-                        foreach($entrypoint['css'] as $cssScript) {
-                            wp_enqueue_style($cssScript, $cssScript);
-                        }
-                    }, 99);
-                }
-
-                if($type === 'front') {
-                    add_action('wp_enqueue_scripts', function() use ($entrypoint) {
-                        foreach($entrypoint['js'] as $jsScript) {
-                            wp_enqueue_script($jsScript, $jsScript);
-                        }
-                        foreach($entrypoint['css'] as $cssScript) {
-                            wp_enqueue_style($cssScript, $cssScript);
-                        }
-                    }, 99);
-                }
-            }
         }
     }
 }
