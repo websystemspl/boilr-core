@@ -1,0 +1,60 @@
+parameters:
+  template.system: '@Websystems\BoilrCore\Service\PhpTemplate'
+
+services:
+  _defaults:
+    autoconfigure: true
+    autowire: true
+
+  # Load App Files
+  Boilr\App\:
+    resource: '../../src/'
+    exclude:
+        - 'src/Controller/'
+    public: true
+
+  # Load Core services
+  Websystems\BoilrCore\Service\:
+    resource: '../src/Service'
+    public: true
+
+  # Load Core Controller
+  Websystems\BoilrCore\Controller:
+    abstract:  true
+    calls:
+      - setContainer: ['@service_container']
+
+  # Load App Controllers
+  Boilr\App\Controller\:
+    resource: '../../src/Controller'
+    parent: Websystems\BoilrCore\Controller
+    public: true
+
+  # Load App Event Subscribers
+  Boilr\App\EventSubscriber\:
+    resource: '../../src/EventSubscriber'
+    public: true
+
+  Websystems\BoilrCore\Interface\TemplateInterface:
+    public: true
+    class: '%template.system%'
+
+  # Add Event Subscriber services to Event Dispatcher
+  Symfony\Component\EventDispatcher\EventDispatcherInterface:
+    public: true
+    class: Symfony\Component\EventDispatcher\EventDispatcher
+
+  Symfony\Component\HttpFoundation\Session\Session:
+    public: true
+
+  Symfony\Component\HttpFoundation\Request:
+    public: true
+    factory: ['Symfony\Component\HttpFoundation\Request', 'createFromGlobals']
+    calls:
+      - setSession: ['@Symfony\Component\HttpFoundation\Session\Session']
+
+  request:
+    alias: Symfony\Component\HttpFoundation\Request
+    public: true
+
+

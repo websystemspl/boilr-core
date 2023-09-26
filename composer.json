@@ -1,0 +1,23 @@
+{
+	"name": "websystemspl/boilr-core",
+	"type": "library",
+	"description": "Library.",
+	"keywords": ["wordpress"],
+	"homepage": "https://web-systems.pl",
+	"license": "MIT",
+    "require": {
+        "php": ">=7.4.0",
+        "symfony/dependency-injection": "5.2",
+        "symfony/proxy-manager-bridge": "^5.4",
+        "symfony/filesystem": "^5.4",
+        "symfony/config": "^5.4",
+        "symfony/yaml": "^5.4",
+        "symfony/http-foundation": "5.4",
+        "symfony/event-dispatcher": "5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Websystems\\BoilrCore\\": "src/"
+        }
+    }
+}
