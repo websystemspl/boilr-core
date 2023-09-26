@@ -21,7 +21,7 @@ abstract class Controller
 
     public function render(string $view, array $parameters = [])
     {
-        $templateService = $this->container->get('Websystems\BoilrCore\Interface\TemplateInterface');
+        $templateService = $this->container->get('Websystems\BoilrCore\Interfaces\TemplateInterface');
         $templateService->render($view, $parameters);
     }
 }

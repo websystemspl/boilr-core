@@ -2,12 +2,9 @@
 
 namespace Websystems\BoilrCore;
 
-use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Config\FileLocator;
 use Websystems\BoilrCore\Event\BootEvent;
-use Websystems\BoilrCore\Resources\AdminRoute;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Websystems\BoilrCore\Loader\ActionsYamlFileLoader;
 use Websystems\BoilrCore\Loader\FiltersYamlFileLoader;
 use Websystems\BoilrCore\Loader\RestApiYamlFileLoader;
