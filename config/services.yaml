@@ -15,7 +15,7 @@ services:
 
   # Load Core services
   Websystems\BoilrCore\Service\:
-    resource: 'src/Service'
+    resource: '../src/Service'
     public: true
 
   # Load Core Controller
