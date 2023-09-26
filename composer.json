@@ -8,7 +8,7 @@
     "require": {
         "php": ">=7.4.0",
         "symfony/dependency-injection": "5.2",
-        "symfony/proxy-manager-bridge": "^5.4",
+        "symfony/proxy-manager-bridge": "^5.1.11",
         "symfony/filesystem": "^5.4",
         "symfony/config": "^5.4",
         "symfony/yaml": "^5.4",
