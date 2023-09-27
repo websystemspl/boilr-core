@@ -5,6 +5,7 @@ namespace Websystems\BoilrCore;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Config\FileLocator;
 use Websystems\BoilrCore\Event\BootEvent;
+use Websystems\BoilrCore\Loader\AjaxYamlFileLoader;
 use Websystems\BoilrCore\Loader\ActionsYamlFileLoader;
 use Websystems\BoilrCore\Loader\FiltersYamlFileLoader;
 use Websystems\BoilrCore\Loader\RestApiYamlFileLoader;
@@ -34,6 +35,7 @@ class Bootstrap
         $this->loadFilters();
         $this->loadAdminHandlers();
         $this->loadRestApiEndpoints();
+        $this->loadAjaxHandlers();
         $this->loadAssets();
 		$this->containerBuilder
 			->get('Symfony\Component\EventDispatcher\EventDispatcherInterface')
@@ -84,12 +86,8 @@ class Bootstrap
 
     private function loadAjaxHandlers()
     {
-
-    }
-
-    private function loadAdminAjaxHandlers()
-    {
-
+        $loader = new AjaxYamlFileLoader($this->containerBuilder, new FileLocator($this->appPath . '/config'));
+        $loader->load('ajax.yaml');
     }
 
     private function loadAssets()
@@ -106,7 +104,7 @@ class Bootstrap
                     if($type === 'admin') {
                         add_action('admin_enqueue_scripts', function() use ($entrypoint) {
                             foreach($entrypoint['js'] as $jsScript) {
-                                wp_enqueue_script($jsScript, $jsScript);
+                                wp_enqueue_script($jsScript, $jsScript, ['wp-util']);
                             }
                             foreach($entrypoint['css'] as $cssScript) {
                                 wp_enqueue_style($cssScript, $cssScript);
@@ -117,7 +115,7 @@ class Bootstrap
                     if($type === 'front') {
                         add_action('wp_enqueue_scripts', function() use ($entrypoint) {
                             foreach($entrypoint['js'] as $jsScript) {
-                                wp_enqueue_script($jsScript, $jsScript);
+                                wp_enqueue_script($jsScript, $jsScript, ['wp-util']);
                             }
                             foreach($entrypoint['css'] as $cssScript) {
                                 wp_enqueue_style($cssScript, $cssScript);
