@@ -5,6 +5,7 @@ namespace Websystems\BoilrCore;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Config\FileLocator;
 use Websystems\BoilrCore\Event\BootEvent;
+use Websystems\BoilrCore\Event\ActivateEvent;
 use Websystems\BoilrCore\Loader\AjaxYamlFileLoader;
 use Websystems\BoilrCore\Loader\ActionsYamlFileLoader;
 use Websystems\BoilrCore\Loader\FiltersYamlFileLoader;
@@ -37,10 +38,19 @@ class Bootstrap
         $this->loadRestApiEndpoints();
         $this->loadAjaxHandlers();
         $this->loadAssets();
+        register_activation_hook($this->appPath . '/plugin.php', [$this, 'onActivate']);
 		$this->containerBuilder
 			->get('Symfony\Component\EventDispatcher\EventDispatcherInterface')
 			->dispatch(new BootEvent($this->containerBuilder), BootEvent::AFTER)
 		;        
+    }
+
+    protected function onActivate()
+    {
+		$this->containerBuilder
+			->get('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+			->dispatch(new ActivateEvent($this->containerBuilder))
+		;  
     }
 
     private function createContainer()
