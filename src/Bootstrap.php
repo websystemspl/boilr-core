@@ -23,9 +23,9 @@ class Bootstrap
     /** @var ContainerBuilder */
     private $containerBuilder;
 
-    public function __construct(string $appPath)
+    public function __construct(string $filePath)
     {
-        $this->appPath = $appPath;
+        $this->appPath = plugin_dir_path($filePath);
         $this->createContainer();
 		$this->containerBuilder
 			->get('Symfony\Component\EventDispatcher\EventDispatcherInterface')
@@ -38,7 +38,7 @@ class Bootstrap
         $this->loadRestApiEndpoints();
         $this->loadAjaxHandlers();
         $this->loadAssets();
-        register_activation_hook($this->appPath . '/plugin.php', [$this, 'onActivate']);
+        register_activation_hook($this->appPath . '/' . basename(plugin_basename($filePath)), [$this, 'onActivate']);
 		$this->containerBuilder
 			->get('Symfony\Component\EventDispatcher\EventDispatcherInterface')
 			->dispatch(new BootEvent($this->containerBuilder), BootEvent::AFTER)
