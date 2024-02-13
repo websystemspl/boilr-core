@@ -45,7 +45,7 @@ class Bootstrap
 		;        
     }
 
-    protected function onActivate()
+    public function onActivate()
     {
 		$this->containerBuilder
 			->get('Symfony\Component\EventDispatcher\EventDispatcherInterface')
