@@ -114,41 +114,21 @@ class Bootstrap
                     if($type === 'admin') {
                         add_action('admin_enqueue_scripts', function() use ($entrypoint) {
                             foreach($entrypoint['js'] as $jsScript) {
-                                if(false === strpos($jsScript, 'http://') && false === strpos($jsScript, 'https://')) {
-                                    $path = '/wp-content/plugins/'. plugin_basename($this->containerBuilder->getParameter('app_path'));
-                                } else {
-                                    $path = "";
-                                }
-                                wp_enqueue_script($jsScript, $path . $jsScript, ['wp-util']);
+                                wp_enqueue_script($jsScript, $jsScript, ['wp-util']);
                             }
-                            foreach($entrypoint['css'] as $cssScript) {
-                                if(false === strpos($cssScript, 'http://') && false === strpos($cssScript, 'https://')) {
-                                    $path = '/wp-content/plugins/'. plugin_basename($this->containerBuilder->getParameter('app_path'));
-                                } else {
-                                    $path = "";
-                                }                                
-                                wp_enqueue_style($cssScript, $path . $cssScript);
+                            foreach($entrypoint['css'] as $cssScript) {                       
+                                wp_enqueue_style($cssScript, $cssScript);
                             }
                         }, 99);
                     }
     
                     if($type === 'front') {
                         add_action('wp_enqueue_scripts', function() use ($entrypoint) {
-                            foreach($entrypoint['js'] as $jsScript) {
-                                if(false === strpos($jsScript, 'http://') && false === strpos($jsScript, 'https://')) {
-                                    $path = '/wp-content/plugins/'. plugin_basename($this->containerBuilder->getParameter('app_path'));
-                                } else {
-                                    $path = "";
-                                }                                
-                                wp_enqueue_script($jsScript, $path . $jsScript, ['wp-util']);
+                            foreach($entrypoint['js'] as $jsScript) {                               
+                                wp_enqueue_script($jsScript, $jsScript, ['wp-util']);
                             }
-                            foreach($entrypoint['css'] as $cssScript) {
-                                if(false === strpos($cssScript, 'http://') && false === strpos($cssScript, 'https://')) {
-                                    $path = '/wp-content/plugins/'. plugin_basename($this->containerBuilder->getParameter('app_path'));
-                                } else {
-                                    $path = "";
-                                }                                
-                                wp_enqueue_style($cssScript, $path . $cssScript);
+                            foreach($entrypoint['css'] as $cssScript) {                            
+                                wp_enqueue_style($cssScript, $cssScript);
                             }
                         }, 99);
                     }
