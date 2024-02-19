@@ -2,6 +2,7 @@
 
 namespace Websystems\BoilrCore\Service;
 
+use Websystems\BoilrCore\Event\TemplateEvent;
 use Websystems\BoilrCore\Interfaces\TemplateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -17,6 +18,11 @@ class PhpTemplate implements TemplateInterface
     public function render(string $view, array $parameters = [])
     {
         extract($parameters);
+		$templateEvent = $this->container
+			->get('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+			->dispatch(new TemplateEvent($this->container))
+        ;
+        extract($templateEvent->getData());
 
         ob_start();
         include($this->container->getParameter('app_path') . '/templates' . '/' . $view);
