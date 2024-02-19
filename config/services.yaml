@@ -28,6 +28,8 @@ services:
 
   Symfony\Component\HttpFoundation\Session\Session:
     public: true
+    calls:
+     - start: []
 
   Symfony\Component\HttpFoundation\Request:
     public: true
