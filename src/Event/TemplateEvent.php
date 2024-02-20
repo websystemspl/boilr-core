@@ -9,9 +9,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 class TemplateEvent extends Event
 {
     private ContainerInterface $container;
-    private $data;
+    private array $data;
 
-    public function __construct(ContainerInterface $container, $data = null)
+    public function __construct(ContainerInterface $container, array $data = [])
     {
         $this->container = $container;
         $this->data = $data;
@@ -50,7 +50,7 @@ class TemplateEvent extends Event
      *
      * @return  self
      */ 
-    public function setData($data)
+    public function setData(array $data = [])
     {
         $this->data = $data;
 
