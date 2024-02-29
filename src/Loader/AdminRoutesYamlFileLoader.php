@@ -117,8 +117,8 @@ class AdminRoutesYamlFileLoader extends FileLoader
 
         $adminPage = new AdminRoute(
             $action['parent_slug'],
-            __($action['page_title'], 'boilr'),
-            __($action['menu_title'], 'boilr'),
+            __($action['page_title'], basename(plugin_basename($this->container->getParameter('app_path')))),
+            __($action['menu_title'], basename(plugin_basename($this->container->getParameter('app_path')))),
             $action['capability'],
             $action['menu_slug'],
             $this->container->get($action['controller']),
