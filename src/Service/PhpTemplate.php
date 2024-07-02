@@ -18,11 +18,15 @@ class PhpTemplate implements TemplateInterface
     public function render(string $view, array $parameters = [])
     {
         extract($parameters);
+        
 		$templateEvent = $this->container
 			->get('Symfony\Component\EventDispatcher\EventDispatcherInterface')
 			->dispatch(new TemplateEvent($this->container))
         ;
-        extract($templateEvent->getData());
+
+        if(null !== $templateEvent->getData()) {
+            extract($templateEvent->getData());
+        }
 
         ob_start();
         include($this->container->getParameter('app_path') . '/templates' . '/' . $view);

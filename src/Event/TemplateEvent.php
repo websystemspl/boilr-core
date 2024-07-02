@@ -2,9 +2,9 @@
 
 namespace Websystems\BoilrCore\Event;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Websystems\BoilrCore\Bootstrap;
 use Symfony\Contracts\EventDispatcher\Event;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TemplateEvent extends Event
 {
