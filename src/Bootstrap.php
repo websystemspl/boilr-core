@@ -114,7 +114,7 @@ class Bootstrap
                     if($type === 'admin') {
                         add_action('admin_enqueue_scripts', function() use ($entrypoint) {
                             foreach($entrypoint['js'] as $jsScript) {
-                                wp_enqueue_script($jsScript, $jsScript, ['wp-util']);
+                                wp_enqueue_script($jsScript, $jsScript, ['wp-util'], false, true);
                             }
                             foreach($entrypoint['css'] as $cssScript) {                       
                                 wp_enqueue_style($cssScript, $cssScript);
@@ -125,7 +125,7 @@ class Bootstrap
                     if($type === 'front') {
                         add_action('wp_enqueue_scripts', function() use ($entrypoint) {
                             foreach($entrypoint['js'] as $jsScript) {                               
-                                wp_enqueue_script($jsScript, $jsScript, ['wp-util']);
+                                wp_enqueue_script($jsScript, $jsScript, ['wp-util'], false, true);
                             }
                             foreach($entrypoint['css'] as $cssScript) {                            
                                 wp_enqueue_style($cssScript, $cssScript);
