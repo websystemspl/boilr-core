@@ -57,7 +57,16 @@ class Bootstrap
     {
         $this->containerBuilder = new ContainerBuilder();
         $this->containerBuilder->setAlias('Symfony\Component\DependencyInjection\ContainerInterface', 'service_container');
-        $this->containerBuilder->setParameter('app_path', $this->appPath);       
+        $this->containerBuilder->setParameter('app_path', $this->appPath);   
+        
+        $session = $this->containerBuilder->register('Symfony\Component\HttpFoundation\Session\Session')
+            ->setPublic(true)
+        ;
+        
+        if ( ! session_id() ) {
+            $session->addMethodCall('start');
+        }
+        
         $loader = new YamlFileLoader($this->containerBuilder, new FileLocator());
         $loader->load(__DIR__ . '/../config/services.yaml');
         $loader->load($this->appPath . '/config/services.yaml');
