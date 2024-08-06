@@ -23,6 +23,8 @@ class Bootstrap
     /** @var ContainerBuilder */
     private $containerBuilder;
 
+    private $adminRoutes;
+
     public function __construct(string $filePath)
     {
         $this->appPath = plugin_dir_path($filePath);
@@ -77,6 +79,7 @@ class Bootstrap
     {
         $loader = new AdminRoutesYamlFileLoader($this->containerBuilder, new FileLocator($this->appPath . '/config'));
         $loader->load('admin_routes.yaml');
+        $this->adminRoutes = $loader->getContent();
     }
 
     private function loadActions()
@@ -111,6 +114,7 @@ class Bootstrap
 
     private function loadAssets()
     {
+       
         $finder = new Finder();
 
         try {
@@ -120,7 +124,7 @@ class Bootstrap
             foreach($finder as $file) {
                 $fileData = json_decode($file->getContents(), true);
                 foreach($fileData['entrypoints'] as $type => $entrypoint) {
-                    if($type === 'admin') {
+                    if($type === 'admin' && $this->canLoadAdminAssets() === true) {
                         add_action('admin_enqueue_scripts', function() use ($entrypoint) {
                             foreach($entrypoint['js'] as $jsScript) {
                                 wp_enqueue_script($jsScript, $jsScript, ['wp-util'], false, true);
@@ -146,5 +150,17 @@ class Bootstrap
         } catch (\Throwable $th) {
 
         }
+    }
+
+    private function canLoadAdminAssets()
+    {
+        $request = $this->containerBuilder->get('request');
+        foreach($this->adminRoutes['admin_routes'] as $adminRoute) {
+            if($request->query->get('page') === $adminRoute['menu_slug']) {
+                return true;
+            }
+        }        
+
+        return false;
     }
 }

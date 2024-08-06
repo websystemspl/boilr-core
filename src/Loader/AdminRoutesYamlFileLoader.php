@@ -14,11 +14,13 @@ use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 class AdminRoutesYamlFileLoader extends FileLoader
 {
     private $yamlParser;
+    private $content;
 
     public function load($resource, string $type = null)
     {
         $path = $this->locator->locate($resource);
         $content = $this->loadFile($path);
+        $this->content = $content;
 
         // empty file
         if (null === $content) {
@@ -29,6 +31,11 @@ class AdminRoutesYamlFileLoader extends FileLoader
 
         $this->parseDefinitions($content, $path);
 
+    }
+
+    public function getContent()
+    {
+        return $this->content;
     }
 
     public function supports($resource, string $type = null)
