@@ -11,6 +11,7 @@ use Websystems\BoilrCore\Loader\ActionsYamlFileLoader;
 use Websystems\BoilrCore\Loader\FiltersYamlFileLoader;
 use Websystems\BoilrCore\Loader\RestApiYamlFileLoader;
 use Websystems\BoilrCore\Loader\AdminRoutesYamlFileLoader;
+use Websystems\BoilrCore\Loader\FrontRoutesYamlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Websystems\BoilrCore\Loader\AdminHandlersYamlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -39,6 +40,7 @@ class Bootstrap
         $this->loadAdminHandlers();
         $this->loadRestApiEndpoints();
         $this->loadAjaxHandlers();
+        $this->loadFrontRoutes();
         $this->loadAssets();
         register_activation_hook($this->appPath . '/' . basename(plugin_basename($filePath)), [$this, 'onActivate']);
 		$this->containerBuilder
@@ -65,9 +67,9 @@ class Bootstrap
             ->setPublic(true)
         ;
         
-        if ( ! session_id() ) {
-            $session->addMethodCall('start');
-        }
+        // if ( ! session_id() ) {
+        //     $session->addMethodCall('start');
+        // }
         
         $loader = new YamlFileLoader($this->containerBuilder, new FileLocator());
         $loader->load(__DIR__ . '/../config/services.yaml');
@@ -92,6 +94,12 @@ class Bootstrap
     {
         $loader = new FiltersYamlFileLoader($this->containerBuilder, new FileLocator($this->appPath . '/config'));
         $loader->load('filters.yaml');
+    }
+
+    private function loadFrontRoutes()
+    {
+        $loader = new FrontRoutesYamlFileLoader($this->containerBuilder, new FileLocator($this->appPath . '/config'));
+        $loader->load('front_routes.yaml');
     }
 
     private function loadAdminHandlers()
