@@ -22,13 +22,13 @@ class AjaxYamlFileLoader extends FileLoader
 
         // empty file
         if (null === $content) {
-            return;
+            return null;
         }
 
         $this->setCurrentDir(\dirname($path));
 
         $this->parseDefinitions($content, $path);
-
+        return null;
     }
 
     public function supports(mixed $resource, ?string $type = null): bool
