@@ -15,7 +15,7 @@ class FrontRoutesYamlFileLoader extends FileLoader
 {
     private $yamlParser;
 
-    public function load(mixed $resource, ?string $type = null)
+    public function load(mixed $resource, ?string $type = null): mixed
     {
         try {
             $path = $this->locator->locate($resource);
@@ -34,7 +34,7 @@ class FrontRoutesYamlFileLoader extends FileLoader
         }
     }
 
-    public function supports(mixed $resource, ?string $type = null)
+    public function supports(mixed $resource, ?string $type = null): bool
     {
         if (!\is_string($resource)) {
             return false;

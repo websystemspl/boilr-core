@@ -14,7 +14,7 @@ class AdminHandlersYamlFileLoader extends FileLoader
 {
     private $yamlParser;
 
-    public function load(mixed $resource, ?string $type = null)
+    public function load(mixed $resource, ?string $type = null): mixed
     {
         $path = $this->locator->locate($resource);
         $content = $this->loadFile($path);
@@ -28,7 +28,7 @@ class AdminHandlersYamlFileLoader extends FileLoader
         $this->parseDefinitions($content, $path);
     }
 
-    public function supports(mixed $resource, ?string $type = null)
+    public function supports(mixed $resource, ?string $type = null): bool
     {
         if (!\is_string($resource)) {
             return false;
