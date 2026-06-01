@@ -33,6 +33,7 @@ class FrontRoutesYamlFileLoader extends FileLoader
         } catch (FileLocatorFileNotFoundException $e) {
 
         }
+        return null;
     }
 
     public function supports(mixed $resource, ?string $type = null): bool
